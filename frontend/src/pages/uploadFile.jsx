@@ -14,6 +14,8 @@ const UploadFile = () => {
     const [showPreview, setShowPreview] = useState(false);
     const [showImported, setShowImported] = useState(false);
 
+    const backendEndpoint = import.meta.env.VITE_API_ENDPOINT || "http://localhost:5000";
+
     const onDrop = useCallback((acceptedFiles) => {
         if (acceptedFiles.length > 0) {
             setFile(acceptedFiles[0]);
@@ -40,7 +42,7 @@ const UploadFile = () => {
         formData.append("file", file);
 
         try {
-            const response = await axios.post("http://localhost:5000/upload", formData, {
+            const response = await axios.post(`${backendEndpoint}/upload`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 
@@ -77,7 +79,7 @@ const UploadFile = () => {
                 validData[sheet] = previewData[sheet].filter(row => !row._deleted);
             });
 
-            const response = await axios.post("http://localhost:5000/import", { data: validData });
+            const response = await axios.post(`${backendEndpoint}/import`, { data: validData });
             
             if (response.data.importedData) {
                 setImportedData(response.data.importedData);

@@ -1,9 +1,9 @@
-import UploadFile from "./pages/uploadFile";
+import UploadFile from './pages/UploadFile';
 
 export default function App() {
   return (
     <>
       <UploadFile />
     </>
-  )
+  );
 }
